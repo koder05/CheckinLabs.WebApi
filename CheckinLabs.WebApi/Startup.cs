@@ -19,7 +19,6 @@ namespace CheckinLabs.WebApi
 {
     public class Startup
     {
-        private const string ApiName = "CheckinLabs WebApi";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,7 +36,7 @@ namespace CheckinLabs.WebApi
                 );
             services.AddSwaggerGen(swagger =>
             {
-                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = ApiName });
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = Glob.ApiName });
                 swagger.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
@@ -80,8 +79,8 @@ namespace CheckinLabs.WebApi
                 .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = oidcConf.Authority ?? "https://localhost:5001";
-                    options.ApiName = oidcConf.ApiName ?? ApiName;
+                    options.Authority = oidcConf.Authority;
+                    options.ApiName = oidcConf.ApiName;
                     options.RequireHttpsMetadata = true;
                     options.NameClaimType = "name";
                 });

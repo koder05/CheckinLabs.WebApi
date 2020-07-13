@@ -1,11 +1,8 @@
-﻿using CheckinLabs.BL;
-using CheckinLabs.BL.Models;
+﻿using CheckinLabs.BL.Models;
 using CheckinLabs.BL.Repo;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CheckinLabs.Data.EF.Repo
@@ -39,7 +36,7 @@ namespace CheckinLabs.Data.EF.Repo
                 .SingleOrDefaultAsync(p => p.User.Name == userName && p.User.AccountState == BL.Enum.AccountState.Active);
             if(profile == null)
                 throw new UserAccountException("user name or password not found.");
-            if (PBKDF2.Hash(profile.User.Name, userPwd, profile.User.SecretSalt).SequenceEqual(profile.User.SecretHash))
+            if (profile.User.GeneratePasswordHash(userPwd, profile.User.SecretSalt).SequenceEqual(profile.User.SecretHash))
             {
                 return profile;
             }

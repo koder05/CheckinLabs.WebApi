@@ -39,24 +39,25 @@ namespace CheckinLabs.WebApi.Auth
 
 
         private Resources resources = new Resources(
-            new IdentityResource[] { new IdentityResources.OpenId(), new IdentityResources.Profile(), new IdentityResources.Email() }
+            new IdentityResource[] { new IdentityResources.OpenId(), new IdentityResources.Profile()/*, new IdentityResources.Email()*/ }
             , new ApiResource[] {
                 new ApiResource {
-                    Name = "SUO2.Communication",
-                    DisplayName = "SUO2 Communication API",
-                    Description = "SUO2 Communication API Access",
+                    Name = Glob.ApiName,
+                    DisplayName = Glob.ApiName,
+                    Description = Glob.ApiName,
                     UserClaims = new List<string> {"role", IdentityModel.JwtClaimTypes.Name, IdentityModel.JwtClaimTypes.Email},
                     ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
                     Scopes = new List<string> {
-                        "SUO2.Communication", "offline_access","profile","email","name"
+                        Glob.ApiName,"offline_access","profile","email","name","openid"
                     }
                 }
             }
             ,new ApiScope[] { 
-                new ApiScope { Name= "SUO2.Communication" }
+                new ApiScope { Name= Glob.ApiName }
                 , new ApiScope { Name = "offline_access" }
                 , new ApiScope { Name = "name" }
                 , new ApiScope { Name = "role" }
+                , new ApiScope { Name = "email" }
             }
         );
     }

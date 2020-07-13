@@ -23,7 +23,11 @@ namespace CheckinLabs.BL.Models
         public void SetPassword(string pwd)
         {
             this.SecretSalt = PBKDF2.GenerateSalt();
-            this.SecretHash = PBKDF2.Hash(this.Name, pwd, this.SecretSalt);
+            this.SecretHash = GeneratePasswordHash(pwd, this.SecretSalt);
+        }
+        public byte[] GeneratePasswordHash(string pwd, byte[] salt)
+        {
+            return PBKDF2.Hash($"{this.UID}.{this.Id}", pwd, salt);
         }
     }
 }

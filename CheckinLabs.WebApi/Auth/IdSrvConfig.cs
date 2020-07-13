@@ -8,7 +8,8 @@ namespace CheckinLabs.WebApi.Auth
     public class IdSrvConfig
     {
         public string Authority { get; set; } = "http://oidc.softingmsk.ru";
-        public string ApiName { get; set; }
+        public string ApiName { get; set; } = Glob.ApiName;
+        public string UIRedirectPage { get; set; } = "spa.html";
         public string UILoginPage { get; set; } = "login.html";
         public string UIErrorPage { get; set; } = "error.html";
         public string UILogoutPage { get; set; } = "logout.html";
@@ -17,5 +18,6 @@ namespace CheckinLabs.WebApi.Auth
         public string UILoginUrl => $"{UIAuthority}/{UILoginPage}";
         public string UILogoutUrl => $"{UIAuthority}/{UILogoutPage}";
         public string UIErrorUrl => $"{UIAuthority}/{UIErrorPage}";
+        public string UIRedirectUrl => $"{UIAuthority}/{UIRedirectPage}";
     }
 }
